@@ -3,21 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using Assets.Architecture.Scripts.Behaviour.BehaviorCollection;
 using System.Collections;
+using UnityEditor;
 
 namespace Assets.Architecture.Scripts.Behaviour
 {
-    public class BehaviourCharacter : MonoBehaviour
+    public abstract class Character : MonoBehaviour
     {
-        public event Action ShotEvent;
         public event Action IsMoveEvent;
-        public event Action IsStopEvent;
-        public event Action<GameObject> EnemyDetectedEvent;
+        public event Action<GameObject> EnemyDetected;
 
         [SerializeField] private string _nameCharacter;
 
         public string NameCharacter => _nameCharacter;
 
-        private Dictionary<Type, IBehaviour> _behavioursMap;
+        protected Dictionary<Type, IBehaviour> _behavioursMap;
 
         private IBehaviour _behaviourCurrent;
 
@@ -27,18 +26,13 @@ namespace Assets.Architecture.Scripts.Behaviour
 
         protected virtual void Start()
         {
+            _behavioursMap = new Dictionary<Type, IBehaviour>();
+
             InltBehaviours();
             SetBahaviourByDefault();
         }
 
-        private void InltBehaviours()
-        {
-            _behavioursMap = new Dictionary<Type, IBehaviour>();
-
-            _behavioursMap[typeof(BehaviourAgressive)] = new BehaviourAgressive(gameObject, this);
-            _behavioursMap[typeof(BehaviourPanic)] = new BehaviourPanic(gameObject);
-            _behavioursMap[typeof(BehaviourIdle)] = new BehaviourIdle();
-        }
+        protected abstract void InltBehaviours();
 
         private void SetBahaviourByDefault()
         {
@@ -46,11 +40,11 @@ namespace Assets.Architecture.Scripts.Behaviour
             SetBehaviour(behaviourByDefault);
         }
 
-        private IBehaviour GetBehaviour<T>() where T : IBehaviour
+        public T GetBehaviour<T>() where T : IBehaviour
         {
             var type = typeof(T);
 
-            return _behavioursMap[type];
+            return (T) _behavioursMap[type];
         }
 
         private void SetBehaviour(IBehaviour newBehaviour)
@@ -80,22 +74,12 @@ namespace Assets.Architecture.Scripts.Behaviour
 
         public void TakeEnemy(GameObject obj)
         {
-            EnemyDetectedEvent?.Invoke(obj);
-        }
-
-        public void Shoot()
-        {
-            ShotEvent?.Invoke();
+            EnemyDetected?.Invoke(obj);
         }
 
         public void IsMove()
         {
             IsMoveEvent?.Invoke();
-        }
-
-        public void IsStop()
-        {
-            IsStopEvent?.Invoke();
         }
     }
 }

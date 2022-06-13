@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace Assets.Architecture.Scripts
 {
-    public class PlayerHPController:MonoBehaviour
+    public class PlayerHPController : MonoBehaviour
     {
        [SerializeField] private PlayerController _playerScript;
        [SerializeField] private Slider _sliderHP;

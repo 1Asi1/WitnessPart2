@@ -1,6 +1,4 @@
 ﻿namespace Assets.Architecture.Scripts.Behaviour.BehaviorCollection
 {
-    public class BehaviourIdle : GeneralBehaviour
-    {
-    }
+    public class BehaviourIdle : GeneralBehaviour { }
 }

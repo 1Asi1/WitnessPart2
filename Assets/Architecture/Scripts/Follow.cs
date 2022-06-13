@@ -12,7 +12,7 @@ namespace Assets.Architecture.Scripts
         {
             if(_followTarget != null)
             {
-                transform.position = new Vector2(_followTarget.transform.position.x, _followTarget.transform.position.y)+ _offset;
+                transform.position = new Vector2(_followTarget.transform.position.x, _followTarget.transform.position.y) + _offset;
             }
         }
     }  

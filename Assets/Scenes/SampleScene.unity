@@ -226,6 +226,10 @@ MonoBehaviour:
   _clipIdle: {fileID: 8300000, guid: dd9727768397c174284a451b1da38ad9, type: 3}
   _clipShooting: {fileID: 8300000, guid: 16912a0acc6d2474796ad85e9787aba0, type: 3}
   _laserPrefab: {fileID: 2694604607346409451, guid: 69264f1fd46e8004ba5e3304736834a2, type: 3}
+  _audioSource: {fileID: 300588469}
+  _config:
+    ShotSFX: {fileID: 0}
+    AudioSource: {fileID: 0}
 --- !u!58 &300588468
 CircleCollider2D:
   m_ObjectHideFlags: 0

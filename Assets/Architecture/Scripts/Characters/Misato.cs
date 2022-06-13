@@ -1,10 +1,11 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using Assets.Architecture.Scripts.Behaviour;
 using Assets.Architecture.Scripts.Behaviour.BehaviorCollection;
 
 namespace Assets.Architecture.Scripts.Characters
 {
-    public class Misato : BehaviourCharacter
+    public class Misato : Character
     {
         [SerializeField] private Ramiel _ramiel;
 
@@ -22,14 +23,24 @@ namespace Assets.Architecture.Scripts.Characters
         protected override void Start()
         {
             base.Start();
-            _ramiel.ShotEvent += OnRamielShot;
+
+            var aggressiveBehavior = _ramiel.GetBehaviour<BehaviourAgressive>();
+
+            aggressiveBehavior.Attacked += OnRamielShot;
         }
 
-        private void OnRamielShot()
+        protected override void InltBehaviours()
+        {
+            _behavioursMap[typeof(BehaviourPanic)] = new BehaviourPanic(gameObject);
+            _behavioursMap[typeof(BehaviourIdle)] = new BehaviourIdle();
+        }
+
+        private void OnRamielShot(BehaviourAgressive behavior, GameObject source, GameObject target)
         {
             SwitchBehavior<BehaviourPanic>();
             _spriteRenderer.sprite = _spriteBehaviourPanic;
-            _ramiel.ShotEvent -= OnRamielShot;
+            
+            behavior.Attacked -= OnRamielShot;
         }
     }
 }

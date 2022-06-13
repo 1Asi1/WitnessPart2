@@ -18,7 +18,6 @@ namespace Assets.Architecture.Scripts.Characters
         {
             if (_playerHP == 0)
             {
-                //gameObject.SetActive(false);
                 Destroy(gameObject);
             }
         }
